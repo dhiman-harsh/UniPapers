@@ -4,7 +4,7 @@ import SearchBar from "../components/SearchBar.jsx"
 
 const Home = () => {
   return (
-    <div>
+    <div className="flex-1">
       <SearchBar />
       {/* <Categories title="My Saved Papers" /> */}
       <Categories title="Program Categories">
