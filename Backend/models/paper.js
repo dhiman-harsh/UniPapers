@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const paperSchema = mongoose.Schema({
+const paperSchema = new mongoose.Schema({
     subjectName: {
         type: String,
         required: true

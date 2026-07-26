@@ -1,17 +1,40 @@
 import express from "express"
+import { restrictToLoggedIn } from "../middlewares/auth.js"
+import Paper from "../models/paper.js"
+import { handleCreatePaper, handleFindAllPapers } from "../controllers/paper.js"
+import multer from "multer"
 
 const router = express.Router()
 
-router.get("/", (req, res) => {
-    return res.json({msg: "all papers"})
+    const storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, 'uploads')
+        },
+        filename: function (req, file, cb) {
+            cb(null, `${Date.now()}-${file.originalname}`)
+        }
+    })
+
+    const upload = multer({ storage: storage })
+
+router.get("/", handleFindAllPapers)
+
+router.post("/upload", upload.array('files', 12), handleCreatePaper)
+
+router.get("/:id", async (req, res) => {
+    const paper = await Paper.findOne({ _id: req.params.id })
+    if (!paper) {
+        return res.json({
+            success: false,
+            message: "Papers not found"
+        })
+    }
+    return res.json({
+        success: true,
+        message: "Papers found",
+        paper
+    })
 })
 
-router.get("/:id", (req, res) => {
-    return res.json({msg: "paper by id"})
-})
-
-router.post("/upload", (req, res) => {
-    return res.json({msg: "upload paper"})
-})
 
 export default router
