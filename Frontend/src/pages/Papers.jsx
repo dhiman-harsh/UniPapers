@@ -6,9 +6,14 @@ const Papers = () => {
     const [papers, setPapers] = useState(null)
     useEffect(() => {
         (async () => {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/paper`)
-            const data = await res.json()
-            setPapers(data.papers)
+            try {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/paper`)
+                const data = await res.json()
+                setPapers(data.papers)
+                console.log(data.papers)
+            } catch (err) {
+                console.log(err)
+            }
         })()
     }, [])
     console.log(papers)

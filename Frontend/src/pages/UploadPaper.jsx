@@ -24,9 +24,14 @@ const UploadPaper = () => {
         formData.append("semester", semester)
         formData.append("year", year)
 
+        const token = localStorage.getItem("token")
+
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/paper/upload`, {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
                 body: formData,
             })
             console.log(response.body)

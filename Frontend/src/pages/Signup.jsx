@@ -1,17 +1,39 @@
+import { useState } from "react"
+
 const Signup = () => {
+    const [fullName, setFullName] = useState()
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+    const handleSignup = async (e) => {
+        e.preventDefault()
+        if(fullName && email && password) {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/user`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fullName, email, password })
+            })
+            const data = await response.json()
+            if(response.ok && data.token) {
+                localStorage.setItem("token", data.token)
+                // <Navigate to="/" />
+            }
+        }
+    }
     return (
         <div className="flex-1 flex flex-col gap-4 justify-center items-center">
             <h1 className="text-2xl font-semibold">Create account!</h1>
-            <form className="w-full px-8 md:px-0 max-w-md md:mx-auto">
+            <form className="w-full px-8 md:px-0 max-w-md md:mx-auto" onSubmit={handleSignup}>
                 <div className="relative z-0 w-full mb-5 group">
-                    <input type="text" name="fullName" id="floating_text" className="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " required />
+                    <input value={fullName} onChange={e => setFullName(e.target.value)} type="text" name="fullName" id="floating_text" className="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " required />
                     <label htmlFor="floating_text" className="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Full Name</label>
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
-                    <input type="email" name="email" id="floating_text" className="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " required />
+                    <input value={email} onChange={e => setEmail(e.target.value)} type="email" name="email" id="floating_text" className="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " required />
                     <label htmlFor="floating_text" className="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Email</label>
                 </div>
-                <div className="relative z-0 w-full mb-5 group">
+                <div value={password} onChange={e => setPassword(e.target.value)} className="relative z-0 w-full mb-5 group">
                     <input type="password" name="password" id="floating_text" className="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " required />
                     <label htmlFor="floating_text" className="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Password</label>
                 </div>
