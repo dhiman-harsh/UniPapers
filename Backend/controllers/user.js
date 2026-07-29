@@ -18,7 +18,8 @@ export const handleCreateUser = async (req, res) => {
     } catch (err) {
         return res.status(409).json({
             success: false,
-            message: 'Email address is already registered.'
+            message: 'Email address is already registered.',
+            error: err
         });
     }
 }
@@ -37,7 +38,8 @@ export const handleLogin = async (req, res) => {
     } catch (err) {
         return res.status(401).json({
             success: false,
-            message: "Invalid email or password."
+            message: "Invalid email or password.",
+            error: err
         })
     }
 }
