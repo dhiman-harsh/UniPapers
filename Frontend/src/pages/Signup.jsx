@@ -1,7 +1,10 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { authContext } from "../../context/Auth"
 
 const Signup = () => {
+    const { saveToken } = useContext(authContext)
+
     const navigate = useNavigate()
     const [isSubmitted, setIsSubmitted] = useState(true)
     const [fullName, setFullName] = useState()
@@ -9,7 +12,8 @@ const Signup = () => {
     const [password, setPassword] = useState()
     const handleSignup = async (e) => {
         e.preventDefault()
-        if(fullName && email && password) {
+        setIsSubmitted(false)
+        if (fullName && email && password) {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/user`, {
                 method: "POST",
                 headers: {
@@ -18,8 +22,9 @@ const Signup = () => {
                 body: JSON.stringify({ fullName, email, password })
             })
             const data = await response.json()
-            if(response.ok && data.token) {
-                localStorage.setItem("token", data.token)
+            if (response.ok && data.token) {
+                saveToken(data.token)
+                setIsSubmitted(true)
                 navigate("/")
             }
         }

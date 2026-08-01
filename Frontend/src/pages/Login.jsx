@@ -1,7 +1,10 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { authContext } from "../../context/Auth"
 
 const Login = () => {
+    const { saveToken } = useContext(authContext)
+
     const navigate = useNavigate()
     const [isSubmitted, setIsSubmitted] = useState(true)
     const [email, setEmail] = useState()
@@ -20,7 +23,7 @@ const Login = () => {
                 })
                 const data = await response.json()
                 if (response.ok && data.token) {
-                    localStorage.setItem("token", data.token)
+                    saveToken(data.token)
                     setEmail('')
                     setPassword('')
                     setIsSubmitted(true)

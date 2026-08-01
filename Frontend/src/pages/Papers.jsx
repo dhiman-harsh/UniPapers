@@ -14,7 +14,7 @@ const Papers = () => {
                 setData(data)
                 setPapers(data.papers)
             } catch (err) {
-                console.log(err)
+                console.error(err.message)
             }
         })()
     }, [])

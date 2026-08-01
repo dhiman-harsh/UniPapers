@@ -8,6 +8,7 @@ import Papers from "./pages/Papers"
 import UploadPaper from "./pages/UploadPaper"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
+import Profile from "./pages/Profile"
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/papers/:id" element={<IndividualPaper />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       <Footer />

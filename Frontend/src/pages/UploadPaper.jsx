@@ -1,6 +1,9 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { authContext } from "../../context/Auth"
 
 const UploadPaper = () => {
+    const { token } = useContext(authContext)
+
     const [subjectName, setSubjectName] = useState()
     const [program, setProgram] = useState()
     const [course, setCourse] = useState()
@@ -24,13 +27,11 @@ const UploadPaper = () => {
         formData.append("semester", semester)
         formData.append("year", year)
 
-        const token = localStorage.getItem("token")
-
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/paper/upload`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                 },
                 body: formData,
             })
