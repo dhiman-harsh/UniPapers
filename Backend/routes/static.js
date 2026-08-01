@@ -10,9 +10,9 @@ router.get("/", (req, res) => {
         })
     }
     return res.json({
-        success: false,
+        success: true,
         message: "User logged in",
-        user
+        user: req.user
     })
 })
 
