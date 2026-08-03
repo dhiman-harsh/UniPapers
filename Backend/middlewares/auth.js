@@ -22,9 +22,11 @@ export const checkAuth = (req, res, next) => {
     const authHeader = req.headers?.authorization;
     if (authHeader) {
         const token = authHeader.split(" ")[1]
-        const user = verifyToken(token)
-        if(user) {
-            req.user = user
+        if (token) {
+            const user = verifyToken(token)
+            if (user) {
+                req.user = user
+            }
         }
     }
     next()
