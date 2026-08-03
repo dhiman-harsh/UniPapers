@@ -14,18 +14,22 @@ const Signup = () => {
         e.preventDefault()
         setIsSubmitted(false)
         if (fullName && email && password) {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/user`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ fullName, email, password })
-            })
-            const data = await response.json()
-            if (response.ok && data.token) {
-                saveToken(data.token)
-                setIsSubmitted(true)
-                navigate("/")
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/user`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ fullName, email, password })
+                })
+                const data = await response.json()
+                if (response.ok && data.token) {
+                    saveToken(data.token)
+                    setIsSubmitted(true)
+                    navigate("/")
+                }
+            } catch (err) {
+                console.error(err)
             }
         }
     }

@@ -13,11 +13,14 @@ const Navbar = () => {
                     <span className="self-center text-xl text-heading font-semibold whitespace-nowrap">Flowbite</span>
                 </Link>
                 <ul className="flex font-medium items-center gap-4 md:gap-6">
-                    <li>
-                        <Link to="/" className="hidden md:block">Home</Link>
+                    <li className="hidden md:block">
+                        <Link to="/" className="">Home</Link>
                     </li>
                     <li>
                         <Link to="/papers" className="">Papers</Link>
+                    </li>
+                    <li className="hidden md:block">
+                        <Link to="/papers/upload" className="py-1 px-3 bg-neutral-200 rounded-md">Upload</Link>
                     </li>
                     <li>
                         {isLoggedIn ? <Link to="/profile">
