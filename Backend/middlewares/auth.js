@@ -6,8 +6,8 @@ export const restrictToLoggedIn = (req, res, next) => {
     if (!authHeader) {
         return res.json({ msg: "login required" })
     }
-    if (authHeader.startsWith('Bearer ')) {
-        const token = authHeader.split('Bearer ')[1]
+    if (authHeader.startsWith('Bearer')) {
+        const token = authHeader.split(' ')[1]
         const user = verifyToken(token)
         if (!user) {
             return res.json({ msg: "login required" })

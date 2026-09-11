@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import { authContext } from "../../context/Auth"
 
 const UploadPaper = () => {
-    const { token } = useContext(authContext)
+    const { token, user } = useContext(authContext)
 
     const [subjectName, setSubjectName] = useState()
     const [program, setProgram] = useState()
@@ -10,6 +10,7 @@ const UploadPaper = () => {
     const [semester, setSemester] = useState()
     const [year, setYear] = useState()
     const [files, setFiles] = useState()
+    const [createdBy, setCreatedBy] = useState({ fullName: user.fullName, _id: user._id })
 
     const handleFile = (e) => {
         setFiles([...e.target.files])
@@ -26,6 +27,7 @@ const UploadPaper = () => {
         formData.append("course", course.toLowerCase())
         formData.append("semester", semester)
         formData.append("year", year)
+        formData.append("createdBy", createdBy)
 
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/paper/upload`, {

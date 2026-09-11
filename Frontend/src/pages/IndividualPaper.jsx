@@ -11,6 +11,7 @@ const IndividualPaper = () => {
             const data = await res.json()
             if (data.success) {
                 setPaper(data.paper)
+                console.log(paper)
             }
         })()
     }, [])

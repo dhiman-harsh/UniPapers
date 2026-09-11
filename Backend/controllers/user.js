@@ -4,21 +4,28 @@ import { generateToken } from "../services/auth.js"
 export const handleCreateUser = async (req, res) => {
     const { fullName, email, password } = req.body
     try {
-        const finduser = await User.findOne({email})
-        if(finduser) {
+        const finduser = await User.findOne({ email })
+
+        if (finduser) {
             return res.status(409).json({
-            success: false,
-            message: 'Email address is already registered.',
-        })
+                success: false,
+                message: 'Email address is already registered.',
+            })
         }
+
         const user = await User.create({ fullName, email, password })
         user.password = null
-        const token = generateToken(user)
-        return res.status(201).json({
-            success: true,
-            message: "User created successfully.",
-            token
-        })
+        try {
+            // generate jwt
+            const token = generateToken(user)
+            return res.status(201).json({
+                token,
+                success: true,
+                message: "User created successfully.",
+            })
+        } catch (err) {
+            console.log(err)
+        }
     } catch (err) {
         return res.status(409).json({
             success: false,
@@ -38,17 +45,23 @@ export const handleLogin = async (req, res) => {
                 message: "Invalid email or password.",
             })
         }
+
         user.password = null
-        const token = generateToken(user)
-        return res.status(200).json({
-            success: true,
-            message: "User logged in successfully.",
-            token
-        })
+
+        try {
+            const token = generateToken(user)
+            return res.status(200).json({
+                token,
+                success: true,
+                message: "User logged in successfully.",
+            })
+        } catch (err) {
+            console.log(err)
+        }
     } catch (err) {
         return res.status(401).json({
             success: false,
-            message: "Invalid email or password.",
+            message: "something broken.",
             error: err
         })
     }

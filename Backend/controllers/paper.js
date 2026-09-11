@@ -38,7 +38,7 @@ export const handleCreatePaper = async (req, res) => {
         filesPath.push(`/uploads/${file.filename}`)
     })
     try {
-        const paper = await Paper.create({ ...body, "paperUrl": JSON.stringify(filesPath) })
+        const paper = await Paper.create({ ...body, createdBy: body.createdBy, "paperUrl": JSON.stringify(filesPath) })
         return res.status(201).json({
             success: true,
             message: "Paper created successfully.",

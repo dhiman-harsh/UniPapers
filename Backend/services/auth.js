@@ -8,19 +8,20 @@ export const generateToken = (user) => {
 }
 
 export const verifyToken = (token) => {
-    if (!token) {
-        return null
+    if (!token || token === 'null' || token === 'undefined') {
+        return null;
     }
-    const actualToken = token.startsWith('Bearer ') ? token.split(' ')[1] : token
     if (!process.env.JWT_SECRET) {
         console.error("CRITICAL: process.env.JWT_SECRET is undefined");
         return null; 
     }
+
     try {
-        const decoded = jwt.verify(actualToken, process.env.JWT_SECRET)
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        console.log(decoded)
         return decoded
     } catch (err) {
-        console.error("JWT Verification Failed:", err.name, err.message);
+        console.error("JWT Verification Failed for input:", token, "Error:", err.name, err.message);
         return null
     }
 }

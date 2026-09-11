@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { authContext } from "../../context/Auth"
 
 const Login = () => {
@@ -50,6 +50,9 @@ const Login = () => {
                     <label htmlFor="floating_text" className="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Password</label>
                 </div>
                 <button type="submit" className={`w-full mt-6 text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none ${!isSubmitted ? 'disabled' : null}`}>{!isSubmitted ? 'Loading...' : 'Login'}</button>
+                <p className="font-medium text-blue-600 mt-4 text-sm flex gap-1">New user?
+                    <Link className="hover:underline" to="/signup">Signup</Link>
+                </p>
             </form>
         </div>
     )
