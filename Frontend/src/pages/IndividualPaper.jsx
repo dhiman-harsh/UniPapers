@@ -7,7 +7,7 @@ const IndividualPaper = () => {
     const [paper, setPaper] = useState(null)
     useEffect(() => {
         (async () => {
-            const res = await fetch(`http://localhost:3000/paper/${id}`)
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/paper/${id}`)
             const data = await res.json()
             if (data.success) {
                 setPaper(data.paper)
