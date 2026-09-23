@@ -18,7 +18,6 @@ const Papers = () => {
             }
         })()
     }, [])
-    console.log(papers)
 
     return (
         <div className="mx-4 lg:mx-15 flex flex-col gap-4 flex-1">
@@ -29,7 +28,7 @@ const Papers = () => {
                         <div className="gap-4 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
                             {papers?.map((paper, idx) => {
                                 return (
-                                    <PaperCard paperId={paper._id} subjectName={paper.subjectName} program={paper.program} semester={paper.semester} course={paper.course} year={paper.year} createdBy={paper.createdBy} key={idx} />
+                                    <PaperCard paperId={paper._id} subjectName={paper.subjectName} program={paper.program} semester={paper.semester} course={paper.course} year={paper.year} createdBy={paper.uploadedBy} key={idx} />
                                 )
                             })}
                         </div> : 

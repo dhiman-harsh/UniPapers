@@ -11,7 +11,6 @@ const IndividualPaper = () => {
             const data = await res.json()
             if (data.success) {
                 setPaper(data.paper)
-                console.log(paper)
             }
         })()
     }, [])
@@ -25,7 +24,9 @@ const IndividualPaper = () => {
                     <span className="border rounded-full px-1.5 capitalize">{paper.course}</span>
                     <span className="border rounded-full px-1.5">{paper.year}</span>
                 </div>
-                <div>{paper.createdBy ? paper.createdBy.fullName : "Anonymous"}</div>
+                {paper.uploadedBy ?
+                <Link to={`/user/${JSON.parse(paper.uploadedBy)._id}`}>{JSON.parse(paper.uploadedBy).fullName}</Link> :
+                <div>Anonymous</div>}
                 <div className="gap-4 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
                     {JSON.parse(paper.paperUrl).map((url, idx) => {
                         console.log(url)
