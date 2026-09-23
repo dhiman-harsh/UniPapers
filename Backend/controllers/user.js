@@ -1,5 +1,5 @@
 import User from "../models/user.js"
-import { generateToken } from "../services/auth.js"
+import { generateToken, getHash, verifyHash } from "../services/auth.js"
 
 export const handleCreateUser = async (req, res) => {
     const { fullName, email, password } = req.body
@@ -13,7 +13,8 @@ export const handleCreateUser = async (req, res) => {
             })
         }
 
-        const user = await User.create({ fullName, email, password })
+        const hashedPassword = await getHash(password)
+        const user = await User.create({ fullName, email, password: hashedPassword })
         user.password = null
         try {
             // generate jwt
@@ -38,8 +39,9 @@ export const handleCreateUser = async (req, res) => {
 export const handleLogin = async (req, res) => {
     const { email, password } = req.body
     try {
-        const user = await User.findOne({ email, password })
-        if (user === null) {
+        const user = await User.findOne({ email })
+        const isMatch = verifyHash(password, user.password)
+        if (user === null || !isMatch) {
             return res.status(401).json({
                 success: false,
                 message: "Invalid email or password.",

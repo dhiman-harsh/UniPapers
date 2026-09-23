@@ -1,3 +1,4 @@
+import { verifyToken } from "../services/auth.js"
 import Paper from "../models/paper.js"
 import multer from "multer"
 
@@ -5,6 +6,7 @@ export const handleFindAllPapers = async (req, res) => {
     try {
         const queryParams = req.query
         let papers = null
+        // console.log(queryParams)
         if (queryParams) {
             papers = await Paper.find({ ...queryParams })
         } else {
@@ -31,6 +33,19 @@ export const handleFindAllPapers = async (req, res) => {
 }
 
 export const handleCreatePaper = async (req, res) => {
+    const authHeader = req.headers?.authorization
+    let user = null
+    if (!authHeader) {
+        return res.json({ msg: "login required" })
+    }
+    if (authHeader.startsWith('Bearer')) {
+        const token = authHeader.split(' ')[1]
+        user = verifyToken(token)
+        console.log("user", user.data)
+        if (!user) {
+            return res.json({ msg: "login required" })
+        }
+    }
     const body = req.body
     const files = req.files
     const filesPath = []
@@ -38,7 +53,11 @@ export const handleCreatePaper = async (req, res) => {
         filesPath.push(`/uploads/${file.filename}`)
     })
     try {
-        const paper = await Paper.create({ ...body, createdBy: body.createdBy, "paperUrl": JSON.stringify(filesPath) })
+        const paper = await Paper.create({
+            ...body,
+            "uploadedBy": JSON.stringify(user.data),
+            "paperUrl": JSON.stringify(filesPath)
+        })
         return res.status(201).json({
             success: true,
             message: "Paper created successfully.",

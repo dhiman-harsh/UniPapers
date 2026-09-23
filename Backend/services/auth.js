@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs"
 
 export const generateToken = (user) => {
     const token = jwt.sign({
@@ -24,4 +25,14 @@ export const verifyToken = (token) => {
         console.error("JWT Verification Failed for input:", token, "Error:", err.name, err.message);
         return null
     }
+}
+
+export const getHash = async (password) => {
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(password, salt)
+    return hash
+}
+
+export const verifyHash = async (password, hash) => {
+    return await bcrypt.compare(password, hash)
 }
