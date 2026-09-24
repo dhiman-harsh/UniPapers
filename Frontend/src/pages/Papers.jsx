@@ -1,15 +1,30 @@
 import { useEffect, useState } from "react"
 import Spinner from "../components/Spinner"
 import PaperCard from "../components/PaperCard"
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 
 const Papers = () => {
+    const [searchParams, setSearchParams] = useSearchParams()
+    const program = searchParams.get('program')
+    const course = searchParams.get('course')
+    console.log(program, course)
+
     const [data, setData] = useState(null)
     const [papers, setPapers] = useState(null)
     useEffect(() => {
         (async () => {
             try {
-                const res = await fetch(`${import.meta.env.VITE_API_URL}/paper`)
+                let res = null
+                if(program && course) {
+                    res = await fetch(`${import.meta.env.VITE_API_URL}/paper?program=${program}&course=${course}`)
+                } else if(program) {
+                    res = await fetch(`${import.meta.env.VITE_API_URL}/paper?program=${program}`)
+                } else if (course) {
+                    res = await fetch(`${import.meta.env.VITE_API_URL}/paper?course=${course}`)
+                } else {
+                    res = await fetch(`${import.meta.env.VITE_API_URL}/paper`)
+                }
+
                 const data = await res.json()
                 setData(data)
                 setPapers(data.papers)
@@ -31,7 +46,7 @@ const Papers = () => {
                                     <PaperCard paperId={paper._id} subjectName={paper.subjectName} program={paper.program} semester={paper.semester} course={paper.course} year={paper.year} createdBy={paper.uploadedBy} key={idx} />
                                 )
                             })}
-                        </div> : 
+                        </div> :
                         <div className="flex flex-col gap-4 justify-center items-center flex-1">
                             <div className="text-3xl mb-3 md:mb-4 lg:text-4xl lg:mb-6 font-medium">No papers available</div>
                             <Link to="/papers/upload">

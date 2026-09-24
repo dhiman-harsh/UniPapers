@@ -8,18 +8,18 @@ const Home = () => {
       <SearchBar />
       {/* <Categories title="My Saved Papers" /> */}
       <Categories title="Program Categories">
-  <CategoryCard title="BA" subtitle="Bachelor of Arts" />
-  <CategoryCard title="BCA" subtitle="Bachelor of Computer Applications" />
-  <CategoryCard title="BCom" subtitle="Bachelor of Commerce" />
-  <CategoryCard title="BSc" subtitle="Bachelor of Science" />
-  <CategoryCard title="BTech" subtitle="Bachelor of Technology" />
+  <CategoryCard title="BA" subtitle="Bachelor of Arts" program="ba" />
+  <CategoryCard title="BCA" subtitle="Bachelor of Computer Applications" program="bca" />
+  <CategoryCard title="BCom" subtitle="Bachelor of Commerce" program="bcom" />
+  <CategoryCard title="BSc" subtitle="Bachelor of Science" program="bsc" />
+  <CategoryCard title="BTech" subtitle="Bachelor of Technology" program="btech" />
 </Categories>
 <Categories title="Course Categories">
-  <CategoryCard title="AEC" subtitle="Ability Enhancement Course" />
-  <CategoryCard title="SEC" subtitle="Skill Enhancement Course" />
-  <CategoryCard title="VAC" subtitle="Value Added Course" />
-  <CategoryCard title="VOC" subtitle="Vocational Course" />
-  <CategoryCard title="MDC" subtitle="Multidisciplinary Course" />
+  <CategoryCard title="AEC" subtitle="Ability Enhancement Course" course="aec" />
+  <CategoryCard title="SEC" subtitle="Skill Enhancement Course" course="sec" />
+  <CategoryCard title="VAC" subtitle="Value Added Course" course="vac" />
+  <CategoryCard title="VOC" subtitle="Vocational Course" course="voc" />
+  <CategoryCard title="MDC" subtitle="Multidisciplinary Course" course="mdc" />
 </Categories>
       {/* <Categories title="Recent Papers" /> */}
     </div>
