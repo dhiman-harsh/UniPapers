@@ -19,7 +19,6 @@ export const verifyToken = (token) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(decoded)
         return decoded
     } catch (err) {
         console.error("JWT Verification Failed for input:", token, "Error:", err.name, err.message);

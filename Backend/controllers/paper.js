@@ -5,10 +5,11 @@ import multer from "multer"
 export const handleFindAllPapers = async (req, res) => {
     try {
         const queryParams = req.query
+        console.log(queryParams)
         let papers = null
         // console.log(queryParams)
         if (queryParams) {
-            papers = await Paper.find({ ...queryParams })
+            papers = await Paper.find(queryParams)
         } else {
             papers = await Paper.find({})
         }
