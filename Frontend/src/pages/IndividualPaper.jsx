@@ -19,19 +19,19 @@ const IndividualPaper = () => {
             {paper ? <div className="rounded-md pb-3 flex flex-col gap-1">
                 <h1 className="font-medium text-3xl capitalize">{paper.subjectName}</h1>
                 <div className="tags flex flex-wrap gap-2 text-xs">
-                    <span className="border rounded-full px-1.5 uppercase">{paper.program}</span>
-                    <span className="border rounded-full px-1.5">{paper.semester}</span>
-                    <span className="border rounded-full px-1.5 capitalize">{paper.course}</span>
-                    <span className="border rounded-full px-1.5">{paper.year}</span>
+                    <span className="rounded-full px-1.5 uppercase bg-neutral-800 text-neutral-200">{paper.program}</span>
+                    <span className="rounded-full px-1.5 bg-neutral-800 text-neutral-200">{paper.semester}</span>
+                    <span className="rounded-full px-1.5 capitalize bg-neutral-800 text-neutral-200">{paper.course}</span>
+                    <span className="rounded-full px-1.5 bg-neutral-800 text-neutral-200">{paper.year}</span>
                 </div>
                 {paper.uploadedBy ?
-                <Link to={`/user/${JSON.parse(paper.uploadedBy)._id}`}>{JSON.parse(paper.uploadedBy).fullName}</Link> :
-                <div>Anonymous</div>}
+                <Link to={`/user/${JSON.parse(paper.uploadedBy)._id}`} className="text-neutral-200">{JSON.parse(paper.uploadedBy).fullName}</Link> :
+                <div className="text-neutral-200">Anonymous</div>}
                 <div className="gap-4 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
                     {JSON.parse(paper.paperUrl).map((url, idx) => {
                         console.log(url)
                         return (
-                            <img className="border rounded-md" key={idx} src={`${import.meta.env.VITE_API_URL}/${url}`} alt={`paper image`} />
+                            <img className="rounded-lg border border-gray-200" key={idx} src={`${import.meta.env.VITE_API_URL}/${url}`} alt={`paper image`} />
                         )
                     })}
                 </div>
@@ -41,7 +41,7 @@ const IndividualPaper = () => {
                         console.log(url)
                         return (
                             <li>
-                                <Link className="font-medium hover:underline" key={idx} to={`${import.meta.env.VITE_API_URL}/${url}`}>{url.split("uploads/")[1]}</Link>
+                                <Link className="hover:underline" key={idx} to={`${import.meta.env.VITE_API_URL}/${url}`}>Image {idx+1}</Link>
                             </li>
                         )
                     })}

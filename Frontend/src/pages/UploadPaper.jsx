@@ -12,11 +12,25 @@ const UploadPaper = () => {
     const [files, setFiles] = useState()
     const [createdBy, setCreatedBy] = useState({ fullName: user.fullName, _id: user._id })
 
+    const [isSubmitted, setIsSubmitted] = useState(true)
+
+    const makeFieldsEmpty = () => {
+        setSubjectName('')
+        setProgram('')
+        setCourse('')
+        setSemester('')
+        setYear('')
+        setFiles('')
+        const fileInput = document.getElementById('multiple_files')
+        fileInput.value = ''
+    }
+
     const handleFile = (e) => {
         setFiles([...e.target.files])
     }
 
     const handleSubmit = async (e) => {
+        setIsSubmitted(false)
         e.preventDefault()
         const formData = new FormData()
         files.forEach(file => {
@@ -43,9 +57,11 @@ const UploadPaper = () => {
             } else {
                 alert('Server error during upload.');
             }
+            makeFieldsEmpty()
         } catch (err) {
             console.error("network error:", err)
         }
+        setIsSubmitted(true)
     }
 
     return (
@@ -78,7 +94,7 @@ const UploadPaper = () => {
                     {/* <label class="block mb-2.5 text-sm font-medium text-heading" for="multiple_files">Upload multiple files</label> */}
                     <input class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body" id="multiple_files" type="file" multiple onChange={handleFile} />
                 </div>
-                <button type="submit" className="w-full mt-6 text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Submit</button>
+                <button type="submit" className={`w-full mt-6 text-white bg-brand box-border shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 ${!isSubmitted ? 'disabled bg-neutral-600' : null}`}>{isSubmitted ? 'Submit' : 'Submitting...'}</button>
             </form>
         </div>
     )
