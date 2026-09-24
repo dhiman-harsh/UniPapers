@@ -7,9 +7,9 @@ const Navbar = () => {
     const { isLoggedIn } = useContext(authContext)
 
     return (
-        <nav className="bg-neutral-primary w-full border-default">
+        <nav className="bg-neutral-primary w-full border-default sticky top-0 z-10">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <Link to="#" className="flex items-center space-x-3 rtl:space-x-reverse">
+                <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src={logo} className="h-7" alt="Flowbite Logo" />
                     <span className="self-center text-xl text-heading font-semibold whitespace-nowrap">unipapers</span>
                 </Link>

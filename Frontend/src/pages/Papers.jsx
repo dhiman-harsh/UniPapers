@@ -35,7 +35,7 @@ const Papers = () => {
                         <div className="flex flex-col gap-4 justify-center items-center flex-1">
                             <div className="text-3xl mb-3 md:mb-4 lg:text-4xl lg:mb-6 font-medium">No papers available</div>
                             <Link to="/papers/upload">
-                                <button className="rounded-md bg-sky-600 text-white font-medium px-6 py-2">Upload Papers</button>
+                                <button className="rounded-md bg-blue-600 text-white font-medium px-6 py-2">Upload Papers</button>
                             </Link>
                             <Link to="/">
                                 <button className="rounded-md bg-neutral-300 text-black font-medium px-6 py-2">Go back to Home</button>
